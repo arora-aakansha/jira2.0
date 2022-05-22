@@ -11,7 +11,7 @@ import com.random.jira.jira2.models.BaseResponse;
 import com.random.jira.jira2.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+// import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,8 +20,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    // @Autowired
+    // private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public BaseResponse<User> saveUser(String name, String password, String email) throws EmailAlreadyExistsException {
@@ -32,7 +32,8 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setName(name);
         user.setEmail(email);
-        user.setPassword(bCryptPasswordEncoder.encode(password));
+        // user.setPassword(bCryptPasswordEncoder.encode(password));
+        user.setPassword(password);
         User savedUser = userDao.saveOrUpdateUser(user);
         return new BaseResponse<>(true, savedUser);
     }
