@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin
+@CrossOrigin()
 @RequestMapping("/users")
 public class UserController {
 
@@ -26,9 +26,12 @@ public class UserController {
 
     @PostMapping(value = "/")
     public ResponseEntity<?> saveUser(@RequestBody User user) throws EmailAlreadyExistsException {
+        System.out.println("I am User COntroller");
         try {
             BaseResponse<User> userResponse = userService.saveUser(user.getName(), user.getPassword(), user.getEmail());
-            return new ResponseEntity<>(userResponse, HttpStatus.CREATED);
+            ResponseEntity response = new ResponseEntity<>(userResponse, HttpStatus.CREATED);
+            System.out.println(response);
+            return response;
         } catch (EmailAlreadyExistsException e) {
             BaseResponse<ErrorResponse> errorResponse = new BaseResponse<>(false,
                     new ErrorResponse("Email already exists"));
