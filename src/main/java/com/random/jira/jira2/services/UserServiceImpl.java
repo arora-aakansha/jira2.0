@@ -8,6 +8,7 @@ import com.random.jira.jira2.entities.User;
 import com.random.jira.jira2.exceptions.EmailAlreadyExistsException;
 import com.random.jira.jira2.exceptions.NoUserFoundException;
 import com.random.jira.jira2.models.BaseResponse;
+import com.random.jira.jira2.models.UserResponse;
 import com.random.jira.jira2.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,8 @@ public class UserServiceImpl implements UserService {
     // private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public BaseResponse<User> saveUser(String name, String password, String email) throws EmailAlreadyExistsException {
+    public BaseResponse<UserResponse> saveUser(String name, String password, String email)
+            throws EmailAlreadyExistsException {
         Optional<User> userOptional = userDao.findByEmail(email);
         if (userOptional.isPresent()) {
             throw new EmailAlreadyExistsException("Email Already exists");
@@ -35,7 +37,8 @@ public class UserServiceImpl implements UserService {
         // user.setPassword(bCryptPasswordEncoder.encode(password));
         user.setPassword(password);
         User savedUser = userDao.saveOrUpdateUser(user);
-        return new BaseResponse<>(true, savedUser);
+        UserResponse userResponse = new UserResponse(savedUser);
+        return new BaseResponse<>(true, userResponse);
     }
 
     @Override

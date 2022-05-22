@@ -5,6 +5,7 @@ import com.random.jira.jira2.entities.User;
 import com.random.jira.jira2.exceptions.EmailAlreadyExistsException;
 import com.random.jira.jira2.models.BaseResponse;
 import com.random.jira.jira2.models.ErrorResponse;
+import com.random.jira.jira2.models.UserResponse;
 import com.random.jira.jira2.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,8 @@ public class UserController {
     public ResponseEntity<?> saveUser(@RequestBody User user) throws EmailAlreadyExistsException {
         System.out.println("I am User COntroller");
         try {
-            BaseResponse<User> userResponse = userService.saveUser(user.getName(), user.getPassword(), user.getEmail());
+            BaseResponse<UserResponse> userResponse = userService.saveUser(user.getName(), user.getPassword(),
+                    user.getEmail());
             ResponseEntity response = new ResponseEntity<>(userResponse, HttpStatus.CREATED);
             System.out.println(response);
             return response;

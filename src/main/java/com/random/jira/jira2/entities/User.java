@@ -1,5 +1,6 @@
 package com.random.jira.jira2.entities;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
@@ -9,10 +10,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+// import javax.validation.constraints.Min;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,8 +32,14 @@ public class User {
     @GeneratedValue
     private int id;
 
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false)
+    // @Min(value = 4)
     private String password;
 
     @OneToOne
@@ -41,7 +48,7 @@ public class User {
 
     @OneToMany
     @JoinColumn(name = "issueId")
-    private Collection<Issues> issues;
+    private Collection<Issues> issues = new ArrayList<>();
 
     @OneToOne
     @JoinColumn(name = "id")
@@ -49,6 +56,6 @@ public class User {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id")
-    private Collection<Skills> skills;
+    private Collection<Skills> skills = new ArrayList<>();
 
 }
