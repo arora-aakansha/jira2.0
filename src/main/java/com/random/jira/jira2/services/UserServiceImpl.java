@@ -42,9 +42,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public BaseResponse<User> searchUser(Integer id) throws NoUserFoundException {
-        // TODO Auto-generated method stub
-        return null;
+    public BaseResponse<UserResponse> findById(Integer id) throws NoUserFoundException {
+        Optional<User> userFound = userDao.findById(id);
+        if (!userFound.isPresent()) {
+            throw new NoUserFoundException("No user Found");
+        }
+        UserResponse userResponse = new UserResponse(userFound.get());
+        return new BaseResponse<>(true, userResponse);
     }
 
 }

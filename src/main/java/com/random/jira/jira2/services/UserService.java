@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 public interface UserService {
     BaseResponse<UserResponse> saveUser(String name, String password, String email) throws EmailAlreadyExistsException;
 
-    BaseResponse<User> searchUser(Integer id) throws NoUserFoundException;
+    BaseResponse<UserResponse> findById(Integer id) throws NoUserFoundException;
+
+    BaseResponse<UserResponse> findByEmail(String email) throws NoUserFoundException;
 
 }
