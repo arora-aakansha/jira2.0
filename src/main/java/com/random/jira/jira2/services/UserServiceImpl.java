@@ -2,14 +2,12 @@ package com.random.jira.jira2.services;
 
 import java.util.Optional;
 
-import com.random.jira.jira2.config.ApplicationConfig;
 import com.random.jira.jira2.dao.UserDao;
 import com.random.jira.jira2.entities.User;
 import com.random.jira.jira2.exceptions.EmailAlreadyExistsException;
 import com.random.jira.jira2.exceptions.NoUserFoundException;
 import com.random.jira.jira2.models.BaseResponse;
 import com.random.jira.jira2.models.UserResponse;
-import com.random.jira.jira2.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -49,6 +47,25 @@ public class UserServiceImpl implements UserService {
         }
         UserResponse userResponse = new UserResponse(userFound.get());
         return new BaseResponse<>(true, userResponse);
+    }
+
+    @Override
+    public BaseResponse<UserResponse> findByEmail(String email) throws NoUserFoundException {
+        Optional<User> userFound = userDao.findByEmail(email);
+        if (!userFound.isPresent()) {
+            throw new NoUserFoundException("No user found for email given email");
+        }
+        UserResponse userResponse = new UserResponse(userFound.get());
+        return new BaseResponse<>(true, userResponse);
+    }
+
+    @Override
+    public BaseResponse<UserResponse> updateUser(User user) throws NoUserFoundException {
+        Optional<User> userFound = userDao.findById(user.getId());
+        if (!userFound.isPresent()) {
+            throw new NoUserFoundException("No user found for email given email");
+        }
+        return null;
     }
 
 }
