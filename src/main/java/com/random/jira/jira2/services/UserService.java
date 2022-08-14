@@ -16,4 +16,6 @@ public interface UserService {
 
     BaseResponse<UserResponse> findByEmail(String email) throws NoUserFoundException;
 
+    BaseResponse<UserResponse> updateUser(User user) throws NoUserFoundException;
+
 }

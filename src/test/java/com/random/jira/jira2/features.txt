@@ -1,0 +1,10 @@
+1. Saving User  and Userprofile
+2. Finding user and userprofile based on id , email/username
+3. Updating user and userprofile
+4. Listing skills of a paticular user
+5. saving and updating issue
+6. assinging issue to user
+7. listing issues assigned to paticular user and department
+8. saving / updating department
+9. listing all users for paticular department 
+10.
